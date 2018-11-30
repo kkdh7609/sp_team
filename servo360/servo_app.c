@@ -16,7 +16,7 @@ int main(void){
 
   k = '2';
   fp = write(fd, &k, 1);
-
+  close(fd);
   return 0;
 }
 
