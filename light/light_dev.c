@@ -12,6 +12,9 @@
 
 
 #define GPIO_light1 23
+#define GPIO_light2 24
+#define GPIO_light3 25
+#define GPIO_light4 12
 #define DEV_NAME "light_dev"
 
 
@@ -26,25 +29,36 @@ MODULE_LICENSE("GPL");
 
 int light_open(struct inode *pinode, struct file *pfile){
   printk("Open Light dev\n");
-  gpio_request(GPIO_light1,"light received");
+  gpio_request(GPIO_light1,"light1 received");
+  gpio_request(GPIO_light2,"light2 received");
+  gpio_request(GPIO_light3,"light3 received");
+  gpio_request(GPIO_light4,"light4 received");
   gpio_direction_input(GPIO_light1);
+  gpio_direction_input(GPIO_light2);
+  gpio_direction_input(GPIO_light3);
+  gpio_direction_input(GPIO_light4);
   return 0;
 }
 
 int light_close(struct inode *pinode, struct file *pfile){
   printk("Release Light dev\n");
   gpio_free(GPIO_light1);
+  gpio_free(GPIO_light2);
+  gpio_free(GPIO_light3);
+  gpio_free(GPIO_light4);
   return 0;
 }
 
-ssize_t light_read(struct file *pfile, char __user *buffer, size_t length){
-  if(gpio_get_value(GPIO_light1)==0){
-
-  }
-  else
-  {
-
-  }
+ssize_t light_read(struct file *pfile, char __user *buffer, size_t length, loff_t *offset){
+  printk("Read Light dev\n");
+  char *buf;
+  buf = kmalloc(4,GFP_KERNEL);
+  gpio_get_value(GPIO_light1)==1? buf[0]='1' : (buf[0] ='0');
+  gpio_get_value(GPIO_light2)==1? buf[1]='1' : (buf[1] ='0');
+  gpio_get_value(GPIO_light3)==1? buf[2]='1' : (buf[2] ='0');
+  gpio_get_value(GPIO_light4)==1? buf[3]='1' : (buf[3] ='0');
+  printk("%c %c %c %c\n",buf[0],buf[1],buf[2],buf[3]);
+  copy_to_user(buffer,buf,4);
   return 0;
 }
 
@@ -52,7 +66,7 @@ struct file_operations fop = {
   .owner = THIS_MODULE,
   .open = light_open,
   .read = light_read,
-  .release = ligth_close,
+  .release = light_close,
 };
 
 int __init light_init(void){
@@ -62,8 +76,8 @@ int __init light_init(void){
     register_chrdev_region(devno,1,"Light drv");
   }
   else{
-    alloc_chrdev_region(&devno,1,"LED drv");
-    malloc = MAJOR(devno);
+    alloc_chrdev_region(&devno,0,1,"LED drv");
+    major = MAJOR(devno);
   }
   cdev_init(&my_cdev,&fop);
   my_cdev.owner = THIS_MODULE;
