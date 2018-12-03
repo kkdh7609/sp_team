@@ -6,7 +6,7 @@
 #include <linux/fs.h>
 #include <asm/uaccess.h>
 
-#define GPIO_180 26
+#define GPIO_180 23
 #define DEV_NAME "SERVO180_dev"
 #define DEV_NUM 242
 

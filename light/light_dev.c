@@ -11,10 +11,10 @@
 #include <linux/cdev.h>
 
 
-#define GPIO_light1 23
-#define GPIO_light2 24
-#define GPIO_light3 25
-#define GPIO_light4 12
+#define GPIO_light1 8
+#define GPIO_light2 7
+#define GPIO_light3 12
+#define GPIO_light4 16
 #define DEV_NAME "light_dev"
 
 

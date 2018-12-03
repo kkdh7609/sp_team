@@ -33,7 +33,7 @@ void turn_servo(int mode){     // mode  0 => turn 90 degree, mode 1 => turn -90 
   int i;
 
   if(mode == 0){        // Turn 90 degrees
-    for(i = 0; i < 10; i++){
+    for(i = 0; i < 15; i++){
       gpio_set_value(GPIO_360, 1);
       usleep_range(1000, 1000);
       gpio_set_value(GPIO_360, 0);
@@ -42,7 +42,7 @@ void turn_servo(int mode){     // mode  0 => turn 90 degree, mode 1 => turn -90 
   }
 
   else if(mode == 1){       // Turn -90 degrees
-    for(i=0; i < 10; i++){
+    for(i=0; i < 15; i++){
       gpio_set_value(GPIO_360, 1);
       usleep_range(2000, 2000);
       gpio_set_value(GPIO_360, 0);

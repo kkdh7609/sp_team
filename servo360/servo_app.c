@@ -13,6 +13,14 @@ int main(void){
     perror("Failed to open the device..");
     return errno;
   }
+  
+  k = '0';
+  fp = write(fd, &k, 1);
+
+  sleep(2);
+  k = '1';
+  fp = write(fd, &k, 1);
+  sleep(2);
 
   k = '2';
   fp = write(fd, &k, 1);
