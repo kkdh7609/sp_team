@@ -1,11 +1,11 @@
-KERNELDIR = /lib/modules/$(shell uname -r)build
+KERNELDIR = /lib/modules/$(shell uname -r)/build
 
-obj-m := Kthseonser.o
+obj-m := dht_dev.o
 
 PWD := $(shell pwd)
 
-default :
-	$(MAKE) -c $(KERNELDIR) M=$(PWD) modules
+default:
+	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules
 
-clean :
-	$(MAKE) -c $(KERNELDIR) M=$(PWD) clean
+clean:
+	$(MAKE) -C $(KERNELDIR) M=$(PWD) clean

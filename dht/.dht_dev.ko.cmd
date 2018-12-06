@@ -1,0 +1,1 @@
+cmd_/home/pi/project/dht/dht_dev.ko := ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/pi/project/dht/dht_dev.ko /home/pi/project/dht/dht_dev.o /home/pi/project/dht/dht_dev.mod.o ;  true

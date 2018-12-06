@@ -46,12 +46,12 @@ struct file_operations fop = {
 };
 
 int __init Soilmoisture_init(void) {
+  printk("[SOIL] init\n");
   register_chrdev(DEV_NUM, DEV_NAME, &fop);
   return 0;
 }
 
 void __exit Soilmoisture_exit(void) {
-  printk(KERN_ALERT "exit Fail\n");
   unregister_chrdev(DEV_NUM, DEV_NAME);
 }
 

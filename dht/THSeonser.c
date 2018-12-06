@@ -17,7 +17,7 @@ void read_dht11_dat()
   uint8_t flag = HIGH ;
   uint8_t state = 0 ;
   float f ;
-
+  printf("abc\n");
   dht11_dat[0] = dht11_dat[1] = dht11_dat[2] = dht11_dat[3] = dht11_dat[4] = 0 ;
 
   pinMode(DHTPIN, OUTPUT) ;
@@ -33,7 +33,10 @@ void read_dht11_dat()
     while ( digitalRead(DHTPIN) == laststate) { 
       counter++ ;
       delayMicroseconds(1) ;
-      if (counter == 200) break ;
+      if (counter == 200){
+        printf("%d\n", digitalRead(DHTPIN));
+        break ;
+      }
     }
 
     laststate = digitalRead(DHTPIN) ;
