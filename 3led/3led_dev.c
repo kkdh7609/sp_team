@@ -9,9 +9,9 @@
 #include <linux/kernel.h>
 #include <linux/slab.h>
 #include <linux/cdev.h>
-#define GPIO_red 17		//RED
-#define GPIO_green 27		//GREEN
-#define GPIO_blue 22		//BLUE
+#define GPIO_red 10		//RED
+#define GPIO_green 9		//GREEN
+#define GPIO_blue 11		//BLUE
 #define DEV_NAME "LED_dev"
 //#define DEV_NUM 242		//if recieve dev_num randomly, dosen't need 
 
@@ -41,9 +41,6 @@ int led_open(struct inode *pinode, struct file *pfile){
 int led_close(struct inode* pinode, struct file *pfile){
   printk("Release LED_dev");
   //unlock the GPIO which were used.
-  gpio_free(GPIO_red);
-  gpio_free(GPIO_green);
-  gpio_free(GPIO_blue);
 
   return 0;
 }
@@ -116,6 +113,10 @@ void __exit led_exit(void){
   if(msg){
     kfree(msg);
   }
+  gpio_free(GPIO_red);
+  gpio_free(GPIO_green);
+  gpio_free(GPIO_blue);
+
   unregister_chrdev_region(devno,1);
   cdev_del(&my_cdev);
 }

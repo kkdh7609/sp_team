@@ -1,0 +1,1 @@
+cmd_/home/pi/project/Soilmoisture/Soilmoisture_dev.ko := ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/pi/project/Soilmoisture/Soilmoisture_dev.ko /home/pi/project/Soilmoisture/Soilmoisture_dev.o /home/pi/project/Soilmoisture/Soilmoisture_dev.mod.o ;  true

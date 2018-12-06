@@ -1,6 +1,6 @@
 KERNELDIR = /lib/modules/$(shell uname -r)/build
 
-obj-m := gastest_dev.o
+obj-m := gas_dev.o
 
 PWD := $(shell pwd)
 

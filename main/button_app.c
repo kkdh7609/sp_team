@@ -15,22 +15,20 @@ int status_button(){
     return -1;
   }
 
-  while(1){
-    if(read(fd, &buf, 1) < 0){
-      printf("[BUTTON] Read error!\n");
-      close(fd);
-      return -1;
-    }
+  if(read(fd, &buf, 1) < 0){
+    printf("[BUTTON] Read error!\n");
+    close(fd);
+    return -1;  
+  }
 
-    if(buf == '1'){
-      close(fd);
-      return 1;
-    }
+  if(buf == '1'){
+    close(fd);
+    return 1;
+  }
 
-    else{
-      close(fd);
-      return 0;
-    }
+  else{
+    close(fd);
+    return 0;
   }
 }
 

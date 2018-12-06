@@ -3,7 +3,6 @@
 #include <linux/compiler.h>
 
 MODULE_INFO(vermagic, VERMAGIC_STRING);
-MODULE_INFO(name, KBUILD_MODNAME);
 
 __visible struct module __this_module
 __attribute__((section(".gnu.linkonce.this_module"))) = {
@@ -15,22 +14,18 @@ __attribute__((section(".gnu.linkonce.this_module"))) = {
 	.arch = MODULE_ARCH_INIT,
 };
 
-#ifdef RETPOLINE
-MODULE_INFO(retpoline, "Y");
-#endif
-
 static const struct modversion_info ____versions[]
 __used
 __attribute__((section("__versions"))) = {
-	{ 0x5a18046e, __VMLINUX_SYMBOL_STR(module_layout) },
+	{ 0xd29ace7d, __VMLINUX_SYMBOL_STR(module_layout) },
 	{ 0x6bc3fbc0, __VMLINUX_SYMBOL_STR(__unregister_chrdev) },
-	{ 0x92e4d526, __VMLINUX_SYMBOL_STR(__register_chrdev) },
+	{ 0xbed0c678, __VMLINUX_SYMBOL_STR(__register_chrdev) },
 	{ 0xf4fa543b, __VMLINUX_SYMBOL_STR(arm_copy_to_user) },
-	{ 0x64df6112, __VMLINUX_SYMBOL_STR(gpiod_get_raw_value) },
+	{ 0xcf08282d, __VMLINUX_SYMBOL_STR(gpiod_get_raw_value) },
 	{ 0xfe990052, __VMLINUX_SYMBOL_STR(gpio_free) },
 	{ 0x2e5810c6, __VMLINUX_SYMBOL_STR(__aeabi_unwind_cpp_pr1) },
-	{ 0x4aa7848f, __VMLINUX_SYMBOL_STR(gpiod_direction_input) },
-	{ 0x530456a0, __VMLINUX_SYMBOL_STR(gpio_to_desc) },
+	{ 0x137c3884, __VMLINUX_SYMBOL_STR(gpiod_direction_input) },
+	{ 0x3d9835a6, __VMLINUX_SYMBOL_STR(gpio_to_desc) },
 	{ 0x47229b5c, __VMLINUX_SYMBOL_STR(gpio_request) },
 	{ 0x27e1a049, __VMLINUX_SYMBOL_STR(printk) },
 	{ 0xb1ad28e0, __VMLINUX_SYMBOL_STR(__gnu_mcount_nc) },
@@ -42,4 +37,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "8B723A97AC3A4018BEE68F8");
+MODULE_INFO(srcversion, "33E83F2D9249CD0FBA43B27");

@@ -7,14 +7,14 @@
 
 #define GPIO 4
 #define DEV_NAME "Soilmoisture_dev"
-#define DEV_NUM 240
+#define DEV_NUM 241
 
 MODULE_LICENSE("GPL");
 
 int Soilmoisture_open(struct inode* pinode, struct file* pfile) {
 
- if( gpio_request(GPIO, "GPIO")) {
-  printk(KERN_ALERT "GPIO Request Fail\n");
+  if( gpio_request(GPIO, "GPIO")) {
+    printk(KERN_ALERT "GPIO Request Fail\n");
   }
 
   gpio_direction_input(GPIO);
@@ -29,7 +29,7 @@ ssize_t Soilmoisture_read(struct file* pfile, char __user* buffer, size_t length
 
   else{
    copy_to_user(buffer, "0", length);
- }
+  }
 
   return 0;
 }

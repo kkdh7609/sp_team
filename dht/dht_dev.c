@@ -108,9 +108,25 @@ void read_data(void){
   status_err = true;                                                          // worng parity
   return;
 }
-  
-      
-    
- 
-      
 
+int dht_read(struct file *pfile, char __user *buffer, size_t length, loff_t *offset){
+  printk("[DHT] read dht dev\n");
+  char buf;
+
+  read_data();
+  if(status_err){
+    printk("[DHT] Reading failed\n");
+    buf = '0';
+    copy_to_user(buffer, &buf, 1);
+    return -1;
+  }
+
+  printk("%d, %d, %d, %d\n", data[0], data[1], data[2], data[3]);
+  buf = '1';
+  copy_to_user(buffer, &buf, 1);
+  return 0;
+}
+
+struct file_operations fop = {
+  .owner = THIS_MODULE,
+  .open = l
