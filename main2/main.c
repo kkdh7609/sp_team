@@ -40,6 +40,7 @@ void *get_soil(void *p){
   pthread_t tid;
   int check;
   char *ch = (char*)p;
+  int soil_mode;
 
   pid = getpid();
   tid = pthread_self();
@@ -47,7 +48,8 @@ void *get_soil(void *p){
   while(1){
     if(is_on == 0)
       continue;
-    check = status_soil();
+    soil_mode = is_on;
+    check = status_soil(soil_mode);
     if(check == -1){
        printf("[MAIN] Error in soil\n");
        continue;
@@ -62,6 +64,7 @@ void *setting_led(void *p){
   pthread_t tid;
   int mode;
   char* ch = (char*)p;
+  int check_soil;
 
   while(1){
     sleep(1);
@@ -71,6 +74,7 @@ void *setting_led(void *p){
       }
       continue;
     }
+    (soil_stat == is_on)? (check_soil = 1):(check_soil = 0);
     mode = (2 * soil_stat) + gas_stat;
     if(set_led(mode) < 0){
       printf("[MAIN] set led error\n");

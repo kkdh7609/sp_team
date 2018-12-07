@@ -1,6 +1,6 @@
 KERNELDIR = /lib/modules/$(shell uname -r)/build
 
-obj-m := Soilmoisture_dev.o
+obj-m := Soilmoisture_dev_2.o
 
 PWD := $(shell pwd)
 

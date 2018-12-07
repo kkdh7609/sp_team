@@ -98,7 +98,7 @@ void read_data(void){
     }
     temp_i = i/8;
     data[temp_i] = data[temp_i] << 1;
-    if(u_times > 20){                      // bit data 0 - 26~28us high signal, bit data 1 - 70us high signal. But actually 0 - 13~14us, 1 - 40us because of delay.
+    if(u_times > 25){                      // bit data 0 - 26~28us high signal, bit data 1 - 70us high signal. But actually 0 - 13~14us, 1 - 40us because of delay.
       data[temp_i] = data[temp_i] + 1;
     }
   }
