@@ -15,6 +15,7 @@ static int is_on=0;
 static char client1_ip[16];
 static char client2_ip[16];
 static int turn_mode;
+static int light_loca;
 
 void *udp_sender_btn(void *p){
   pid_t pid;
@@ -59,6 +60,8 @@ void *udp_sender_light(void *p){
   int sock;
   struct sockaddr_in client_addr;
   char send_msg[] = "0";
+  time_t pre_time;
+  time_t now_time;
 
   pid = getpid();
   tid = pthread_self();
@@ -72,9 +75,24 @@ void *udp_sender_light(void *p){
   client_addr.sin_family = AF_INET;
   client_addr.sin_port = htons(PORT_2);
   client_addr.sin_addr.s_addr = inet_addr(client2_ip);
-
+  time(&pre_time);
   while(1){
-    send_msg[0] = turn_mode + '0';
+    time(&now_time);
+    if(now_time - pre_time > 60){
+      light_loca = 1 - light_loca;
+      pre_time = now_time;
+      (turn_mode == 2)? (send_msg[0] = '2') : (send_msg[0] = '7');
+    }
+    else{
+      if(light_loca == 1){
+        if(turn_mode > 5)
+          send_msg[0] = ((turn_mode + 8)%10) + '0';
+        else
+          send_msg[0] = ((turn_mode + 3)%5) + '0';
+      }
+      else
+        send_msg[0] = turn_mode + '0';
+    }
     sendto(sock, send_msg, strlen(send_msg) + 1, 0, (struct sockaddr*)&client_addr, sizeof(client_addr));
     sleep(1);
   }
@@ -178,6 +196,7 @@ int main(){
   char btn_st[] = "btn_status";
   char servo_thread[] = "servo_thread";
 
+  light_loca = 0;
   scanf("%s",client1_ip);
   scanf("%s",client2_ip);
 
