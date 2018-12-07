@@ -19,6 +19,7 @@ static char client3_ip[16];
 static int turn_mode;
 static int light_loca;
 static int cur_signal;
+static t_time pre_time;
 
 void *udp_sender_btn(void *p){
   pid_t pid;
@@ -63,7 +64,6 @@ void *udp_sender_light(void *p){
   int sock;
   struct sockaddr_in client_addr;
   char send_msg[] = "0";
-  time_t pre_time;
   time_t now_time;
 
   pid = getpid();
@@ -81,20 +81,33 @@ void *udp_sender_light(void *p){
   time(&pre_time);
   while(1){
     time(&now_time);
-    if(now_time - pre_time > 60){
-      light_loca = 1 - light_loca;
-      pre_time = now_time;
-      (turn_mode == 2)? (send_msg[0] = '2') : (send_msg[0] = '7');
-    }
-    else{
-      if(light_loca == 1){
-        if(turn_mode > 5)
-          send_msg[0] = ((turn_mode + 8)%10) + '0';
-        else
-          send_msg[0] = ((turn_mode + 3)%5) + '0';
+    if(is_on == 3){
+      if(now_time - pre_time > 60){
+        light_loca = 1 - light_loca;
+        pre_time = now_time;
+        (turn_mode == 2)? (send_msg[0] = '2') : (send_msg[0] = '7');
       }
-      else
-        send_msg[0] = turn_mode + '0';
+    }
+    else if{is_on == 1)
+      light_loca = 0;
+    else if(is_on == 2)
+      light_loca = 1;
+    if(light_loca == 1){
+      if(turn_mode == 1)
+        send_msg[0] = '3';
+      else if(turn_mode == 2)
+        send_msg[0] = '2';
+      else if(turn_mode == 3)
+        send_msg[0] = '1';
+      else if(turn_mode == 6)
+        send_msg[0] = '8';
+      else if(turn_mode == 7)
+        send_msg[0] = '7';
+      else if(turn_mode == 8)
+        send_msg[0] = '6';
+    }
+    else
+      send_msg[0] = turn_mode + '0';
     }
     sendto(sock, send_msg, strlen(send_msg) + 1, 0, (struct sockaddr*)&client_addr, sizeof(client_addr));
     sleep(1);
@@ -135,9 +148,10 @@ void *button_checker(void *p){
       is_on = 1;
     else if((but_status[0] == 0) && (but_status[1] == 1))
       is_on = 2;
-    else
+    else{
       is_on = 3;
-
+      time(&pre_time);
+    }
     printf("%d\n",is_on);
     sleep(1);
   }
