@@ -11,7 +11,7 @@
 #define PORT_1 55001
 #define PORT_2 55002
 
-static int is_on;
+static int is_on=0;
 static char client1_ip[16];
 static char client2_ip[16];
 static int turn_mode;
@@ -94,27 +94,31 @@ void *button_checker(void *p){
   sleep(1);
   while(1){
     but_num = status_button();
+    printf("%d\n",but_num);
     if(but_num < 0){
       printf("[MAIN] Error occured in button\n");
       sleep(1);
       continue;
     }
-    else if(but_num = 1)
+    else if(but_num == 1)
       but_status[0] = (but_status[0] + 1) % 2;
-    else if(but_num = 2)
+    else if(but_num == 2)
       but_status[1] = (but_status[1] + 1) % 2;
-    else{
+    else if(but_num == 3){
       but_status[0] = (but_status[0] + 1) % 2;
       but_status[1] = (but_status[1] + 1) % 2;
     }
-    if(but_status[0] == 0 && but_status[1] == 0)
+    if((but_status[0] == 0) && (but_status[1] == 0))
       is_on = 0;
-    else if(but_status[0] == 1 && but_status[1] == 0)
+    else if((but_status[0] == 1) && (but_status[1] ==  0))
       is_on = 1;
-    else if(but_status[0] == 0 && but_status[1] == 1)
+    else if((but_status[0] == 0) && (but_status[1] == 1))
       is_on = 2;
     else
       is_on = 3;
+
+    printf("%d\n",is_on);
+    sleep(1);
   }
 }
 
@@ -156,6 +160,8 @@ void* servo_turning(void *p){
     time(&now_time);
     if((now_time - pre_time) >= 30){
       turn_servo180(is_on, cur_a, cur_b);
+      cur_a = 1 - cur_a;
+      cur_b = 1 - cur_b;
     }
     sleep(1);
   }

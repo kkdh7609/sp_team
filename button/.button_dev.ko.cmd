@@ -1,1 +1,1 @@
-cmd_/home/pi/project/button/button_dev.ko := ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/pi/project/button/button_dev.ko /home/pi/project/button/button_dev.o /home/pi/project/button/button_dev.mod.o ;  true
+cmd_/home/pi/systemprogramming/sp_team/button/button_dev.ko := ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/pi/systemprogramming/sp_team/button/button_dev.ko /home/pi/systemprogramming/sp_team/button/button_dev.o /home/pi/systemprogramming/sp_team/button/button_dev.mod.o ;  true
