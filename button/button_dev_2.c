@@ -7,9 +7,9 @@
 #include <linux/interrupt.h>
 #include <asm/uaccess.h>
 
-#define GPIO_BUT 26
+#define GPIO_BUT 19
 #define DEV_NAME "BUTTON_dev"
-#define DEV_NUM 239
+#define DEV_NUM 238 
 
 MODULE_LICENSE("GPL");
 
@@ -22,7 +22,7 @@ static bool is_pushed;
 static int temp;
 static struct timeval pre_time;
 
-irqreturn_t button_interrupt(int irq, void *dev_id){
+irqreturn_t button2_interrupt(int irq, void *dev_id){
   struct timeval cur_time;
   unsigned long start_time, end_time;
   do_gettimeofday(&cur_time);
@@ -30,7 +30,7 @@ irqreturn_t button_interrupt(int irq, void *dev_id){
   end_time = (int)cur_time.tv_sec;
 
   if((end_time - start_time > 1)){ 
-    printk("[BUTTON] Button Pressed\n");
+    printk("[BUTTON] Button2 Pressed\n");
     is_pushed = true;
   }
   do_gettimeofday(&pre_time);
@@ -39,18 +39,18 @@ irqreturn_t button_interrupt(int irq, void *dev_id){
 }
 
 int button_open(struct inode *pinode, struct file *pfile){
-  printk("[BUTTON] Open button_dev\n");
+  printk("[BUTTON] Open button2_dev\n");
   return 0;
 }
 
 int button_close(struct inode *pinode, struct file *pfile){
-  printk("[BUTTON] Close button_dev\n");
+  printk("[BUTTON] Close button2_dev\n");
   return 0;
 }
 
 ssize_t button_read(struct file *pfile, char __user *buffer, size_t length, loff_t *offset){
   char buf;
-  printk("[BUTTON] Read button dev\n");
+  printk("[BUTTON] Read button2 dev\n");
   if(is_pushed){
     buf = '1';
     is_pushed = false;
@@ -70,7 +70,7 @@ struct file_operations fop = {
 };
 
 int __init button_init(void){
-  printk("[BUTTON] Initialize BUTTON_dev\n");
+  printk("[BUTTON] Initialize BUTTON2_dev\n");
   is_pushed = false;
   do_gettimeofday(&pre_time);
   register_chrdev(DEV_NUM, DEV_NAME, &fop);
@@ -79,7 +79,7 @@ int __init button_init(void){
   
   button_irq = gpio_to_irq(GPIO_BUT);
 
-  temp = request_irq(button_irq, &button_interrupt, IRQF_TRIGGER_RISING, "button", NULL);
+  temp = request_irq(button_irq, &button2_interrupt, IRQF_TRIGGER_RISING, "button", NULL);
 
   if(temp<0){
     printk("Failed\n");
@@ -88,7 +88,7 @@ int __init button_init(void){
 }
 
 void __exit button_exit(void){
-  printk("[BUTTON] Exit BUTTON_dev\n");
+  printk("[BUTTON] Exit BUTTON2_dev\n");
   free_irq(button_irq, NULL);
   gpio_free(GPIO_BUT);
   unregister_chrdev(DEV_NUM, DEV_NAME);
