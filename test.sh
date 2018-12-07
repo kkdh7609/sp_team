@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/
 sudo insmod ./button/button_dev.ko
 sudo insmod ./button/button_dev_2.ko
 sudo mknod -m 666 /dev/button_dev c 239 0
