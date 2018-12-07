@@ -15,7 +15,7 @@ int init_servo180(int turn_a, int turn_b){
       printf("[SERVO180_1] Failed to open device\n");
       return -1;
     }
-  
+
     if(write(fd1, &buf, 1) < 0){
       printf("[SERVO180_1] Failed to write device\n");
       close(fd1);
