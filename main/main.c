@@ -85,7 +85,7 @@ void *udp_sender_light(void *p){
       if(now_time - pre_time > 60){
         light_loca = 1 - light_loca;
         pre_time = now_time;
-        (turn_mode == 2)? (send_msg[0] = '2') : (send_msg[0] = '7');
+        (turn_mode == 2)? (send_msg[0] = '7') : (send_msg[0] = '2');
       }
     }
     else if{is_on == 1)
