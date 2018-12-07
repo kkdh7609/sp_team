@@ -150,7 +150,6 @@ void *button_checker(void *p){
       is_on = 2;
     else{
       is_on = 3;
-      time(&pre_time);
     }
     printf("%d\n",is_on);
     sleep(1);
