@@ -48,7 +48,7 @@ void *udp_sender_btn(void *p){
     else if(is_on == 2)
       send_msg[0] = '2';
     else if(is_on == 3)
-      send_msg[0] =='3';
+      send_msg[0] = '3';
     else{
       send_msg[0] = '0';
     }
