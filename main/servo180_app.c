@@ -23,7 +23,7 @@ int init_servo180(int turn_a, int turn_b){
     }
     close(fd1);
   }
-  sleep(1);
+  sleep(2);
   if(turn_b == 1){
     fd2 = open(SV180_DEV_NAME_2, O_RDWR);
     if(fd2 < 0){
