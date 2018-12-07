@@ -1,5 +1,5 @@
 #include "light_app.h"
-#include "servo360_app.h"
+#include "servo180_app.h"
 #include "button_app.h"
 #include <time.h>
 #include <stdbool.h>
@@ -86,10 +86,12 @@ void *button_checker(void *p){
   char *ch = (char*)p;
   int but_num;
   int but_status[2] = {0, 0};
-
+  int temp_btn;
   pid = getpid();
   tid = pthread_self();
 
+  temp_btn = status_button();
+  sleep(1);
   while(1){
     but_num = status_button();
     if(but_num < 0){
@@ -116,14 +118,58 @@ void *button_checker(void *p){
   }
 }
 
+void* servo_turning(void *p){
+  pid_t pid;
+  pthread_t tid;
+  char *ch = (char*)p;
+  int pre_stat = 0;
+  int turn_a, turn_b;
+  int cur_a = 0;
+  int cur_b = 0;
+  time_t pre_time;
+  time_t now_time;
+  time(&pre_time);
+
+  while(1){
+    if(is_on != pre_stat){
+      if(pre_stat == 0){
+        turn_a = (is_on % 2);
+        turn_b = (int)(is_on >= 2);
+        init_servo180(turn_a, turn_b);
+        pre_stat = is_on;
+        cur_a = 0;
+        cur_b = 0;
+      }
+      else if(pre_stat == 1){
+        turn_b = (int)(is_on >= 2);
+        init_servo180(0, turn_b);
+        pre_stat = is_on;
+        cur_b = 0;
+      }
+      else if(pre_stat == 2){
+        turn_a = (is_on % 2);
+        init_servo180(turn_a, 0);
+        pre_stat = is_on;
+        cur_a = 0;
+      }
+    }
+    time(&now_time);
+    if((now_time - pre_time) >= 10){
+      turn_servo180(is_on, cur_a, cur_b);
+    }
+    sleep(1);
+  }
+}
+
 int main(){
   int light_loc;
-  pthread_t p_thread[4];
+  pthread_t p_thread[5];
   int thread_id;
   int status;
   char udp_btn[] = "udp_btn";
   char udp_light[] = "udp_light";
   char btn_st[] = "btn_status";
+  char servo_thread[] = "servo_thread";
 
   thread_id = pthread_create(&p_thread[0], NULL, udp_sender_btn, (void*)udp_btn);
   if(thread_id < 0){
@@ -137,7 +183,13 @@ int main(){
     return 0;
   }
 
-  thread_id = pthread_create(&p_thread[2], NULL, button_checker, (void*)btn_st);
+  thread_id = pthread_create(&p_thread[2], NULL, servo_turning, (void*)servo_thread);
+  if(thread_id < 0){
+    perror("[MAIN] thread create error\n");
+    return 0;
+  }
+
+  thread_id = pthread_create(&p_thread[3], NULL, button_checker, (void*)btn_st);
   if(thread_id < 0){
     perror("[MAIN] thread create error\n");
     return 0;
@@ -146,6 +198,7 @@ int main(){
   is_on = 0;
   while(1){
     if(is_on == 0){
+      turn_mode = 0;
       continue;
     }
     light_loc = get_light();
@@ -169,6 +222,7 @@ int main(){
   pthread_join(p_thread[0], (void**)&status);
   pthread_join(p_thread[1], (void**)&status);
   pthread_join(p_thread[2], (void**)&status);
+  pthread_join(p_thread[3], (void**)&status);
 
   return 0;
 }

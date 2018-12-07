@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <fctnl.h>
+#include <fcntl.h>
 
 #define SV180_DEV_NAME_1 "/dev/servo180_dev"
 #define SV180_DEV_NAME_2 "/dev/servo180_dev_2"
