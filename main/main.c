@@ -158,7 +158,7 @@ void* servo_turning(void *p){
       }
     }
     time(&now_time);
-    if((now_time - pre_time) >= 20){
+    if((now_time - pre_time) >= 10){
       pre_time = now_time;
       turn_servo180(is_on, cur_a, cur_b);
       cur_a = 1 - cur_a;
