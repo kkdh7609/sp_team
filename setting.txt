@@ -1,8 +1,12 @@
 servo360 dev 240, 18번
 servo180 dev 242, 241, 23번 24번
 light dev 243 7번 8번 12번 16번
-button 238 239  19번 26번
+button dev 238 239  19번 26번
 
+GAS dev 240 gpio 6번
+토양 dev 241,242 gpio 4,17번
+LED dev 자동, gpio 10, 9, 11번
+온습도 dev 239, gpio 13
 
 
          북
@@ -25,9 +29,6 @@ button 238 239  19번 26번
 -----------------------------
 
 
-GAS dev 240, gpio 17번
-토양 dev 241, gpio 4번
-LED dev 자동, gpio 10, 9, 11번
 
 
 버튼, 조도, 3LED,  - 3.3V
