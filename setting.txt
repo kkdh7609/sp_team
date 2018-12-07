@@ -1,7 +1,8 @@
 servo360 dev 240, 18번
 servo180 dev 242, 241, 23번 24번
 light dev 243 7번 8번 12번 16번
-button dev 238 239  19번 26번
+button dev 239 26번
+button dev_2 238 19번
 
 GAS dev 240 gpio 6번
 토양 dev 241,242 gpio 4,17번
