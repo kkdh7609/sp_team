@@ -14,6 +14,7 @@
 static int is_on=0;
 static char client1_ip[16];
 static char client2_ip[16];
+static char client3_ip[16];
 static int turn_mode;
 static int light_loca;
 
@@ -199,6 +200,7 @@ int main(){
   light_loca = 0;
   scanf("%s",client1_ip);
   scanf("%s",client2_ip);
+  scanf("%s",client3_ip);
 
   thread_id = pthread_create(&p_thread[0], NULL, udp_sender_btn, (void*)udp_btn);
   if(thread_id < 0){
