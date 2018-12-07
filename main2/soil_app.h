@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#define SOIL_DEV_NAME "/dev/soil_dev"
+#define SOIL1_DEV_NAME "/dev/soil_dev"
+#deinfe SOIL2_DEV_NAME "/dev/soil_dev_2"
 
-int status_soil(void);
+int status_soil(int mode);
