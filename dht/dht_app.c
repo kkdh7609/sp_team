@@ -5,12 +5,12 @@
 
 int main(void){
   int fd;
-  char c;
+  char c[20];
   while(1){
   fd = open("/dev/dht_dev", O_RDONLY);
-  read(fd, &c, 1);
-  if(c == '1')  printf("abcabc\n");
-  if(c == '0')  printf("xxxxxxxx\n");
+  read(fd, c, 20);
+  if(c[0] == '0')  printf("xxxxxxxx\n");
+  else printf("%s\n", c);
   sleep(1);
 
   close(fd);

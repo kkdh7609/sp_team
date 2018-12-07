@@ -10,7 +10,7 @@
 #include <linux/delay.h>
 
 #define DEV_NAME "GAS_dev"
-#define GPIO_GAS 17
+#define GPIO_GAS 6
 #define DEV_NUM 240
 
 MODULE_LICENSE("GPL");

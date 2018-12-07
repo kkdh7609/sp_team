@@ -12,6 +12,7 @@ int status_gas(){
   fd = open(GAS_DEV_NAME, O_RDONLY);
   if(fd == -1){
     printf("[GAS] Open error\n");
+    close(fd);
     return -1;
   }
 
@@ -27,7 +28,7 @@ int status_gas(){
   }
 
   else{
-    printf("No GAS!\n");
+    //printf("No GAS!\n");
     close(fd);
     return 0;
   }

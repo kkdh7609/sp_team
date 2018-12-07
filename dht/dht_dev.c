@@ -6,9 +6,9 @@
 #include <linux/fs.h>
 #include <asm/uaccess.h>
 
-#define GPIO_DHT 4
+#define GPIO_DHT 13
 #define DEV_NAME "DHT_dev"
-#define DEV_NUM 241
+#define DEV_NUM 239
 
 #define DATANUM 40 // 40 databits
 static int data[5] = {0, 0, 0, 0, 0}; // [0] = High gumidity 8bits, [1] = Low humidity 8bits, [2] = High temper 8bits, [3] = Low temper 8bits, [4] = Parity 8bit
@@ -113,19 +113,19 @@ void read_data(void){
 
 int dht_read(struct file *pfile, char __user *buffer, size_t length, loff_t *offset){
   printk("[DHT] read dht dev\n");
-  char buf;
+  char buf[20];
 
   read_data();
   if(status_err){
     printk("[DHT] Reading failed\n");
-    buf = '0';
-    copy_to_user(buffer, &buf, 1);
+    buf[0] = '-';
+    copy_to_user(buffer, &buf[0], 1);
     return -1;
   }
 
   printk("%d, %d, %d, %d\n", data[0], data[1], data[2], data[3]);
-  buf = '1';
-  copy_to_user(buffer, &buf, 1);
+  sprintf(buf, "%d,%d,%d,%d\n", data[0], data[1], data[2], data[3]);
+  copy_to_user(buffer, buf, sizeof(buf));
   return 0;
 }
 
