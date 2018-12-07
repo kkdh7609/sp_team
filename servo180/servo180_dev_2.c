@@ -6,7 +6,7 @@
 #include <linux/fs.h>
 #include <asm/uaccess.h>
 
-#define GPIO_180 24
+#define GPIO_180 17
 #define DEV_NAME "SERVO180_dev"
 #define DEV_NUM 241
 
@@ -34,17 +34,18 @@ void turn_servo(int mode){
   if(mode ==0){
     for(i=0;i<50;i++){
       gpio_set_value(GPIO_180,1);
-      usleep_range(2360,2360);
+      mdelay(2);
       gpio_set_value(GPIO_180,0);
-      usleep_range(17640,17640);
+      mdelay(18);
     }
   }
   else if(mode==1){
     for(i=0; i<50; i++){
       gpio_set_value(GPIO_180,1);
-      usleep_range(500, 500);
+      udelay(500);
       gpio_set_value(GPIO_180,0);
-      usleep_range(19500, 19500);
+      mdelay(19);
+      udelay(500);
     }
   }
 }

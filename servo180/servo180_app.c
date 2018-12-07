@@ -6,7 +6,7 @@
 int main(void){
   char k;
   int fd, fp;
-
+  while(1){
   fd = open("/dev/servo180_dev", O_RDWR);
 
   if(fd < 0){
@@ -25,7 +25,7 @@ int main(void){
   close(fd);
   
   sleep(2);
-
+  /* 
   fd = open("/dev/servo180_dev_2", O_RDWR);
 
   if(fd < 0){
@@ -42,6 +42,8 @@ int main(void){
   fp = write(fd, &k, 1);
   printf("2\n");
   close(fd);
-
+  sleep(3);
+  */
+  }
   return 0;
 }
