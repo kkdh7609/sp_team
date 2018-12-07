@@ -143,7 +143,7 @@ void *button_checker(void *p){
   }
 }
 
-
+/*
 void* udp_servo180(void *p){
   pid_t pid;
   pthread_t tid;
@@ -163,10 +163,10 @@ void* udp_servo180(void *p){
   memset(&client_addr, 0, sizeof(client_addr));
   client_addr.sin_family = AF_INET;
   client_addr.sin_port = htons(PORT_3);
-  client_addr.sin_addr.s_addr = inet_addr(client1_ip);
+  client_addr.sin_addr.s_addr = inet_addr(client3_ip);
 
   while(1){
-    send_msg[0] = cur_signal + '0'
+    send_msg[0] = cur_signal + '0';
     sendto(sock, send_msg, strlen(send_msg) + 1, 0, (struct sockaddr*)&client_addr, sizeof(client_addr));
     sleep(1);
   }
@@ -190,7 +190,7 @@ void* servo_turning(void *p){
         turn_a = (is_on % 2);
         if(is_on >= 2) 
           cur_signal = 2;
-        init_servo180();
+       // init_servo180();
         pre_stat = is_on;
         cur_a = 0;
       }
@@ -201,7 +201,7 @@ void* servo_turning(void *p){
       }
       else if(pre_stat == 2){
         if((is_on % 2) == 1)
-          init_servo180();
+        // init_servo180();
         pre_stat = is_on;
         cur_a = 0;
       }
@@ -210,14 +210,15 @@ void* servo_turning(void *p){
     if((now_time - pre_time) >= 10){
       pre_time = now_time;
       if((is_on % 2) == 1)
-        turn_servo180(cur_a);
+       // turn_servo180(cur_a);
       if(is_on >= 2)
-        (cur_signal == 2)? (cur_signal = 0) : (cur_siganl = 1- cur_signal);
+        (cur_signal == 2)? (cur_signal = 0) : (cur_signal = 1- cur_signal);
       cur_a = 1 - cur_a;
     }
     sleep(1);
   }
 }
+*/
 
 int main(){
   int light_loc;
@@ -227,13 +228,13 @@ int main(){
   char udp_btn[] = "udp_btn";
   char udp_light[] = "udp_light";
   char btn_st[] = "btn_status";
-  char servo_thread[] = "servo_thread";
-  char udp_servo[] = "servo180_thread";
+  //char servo_thread[] = "servo_thread";
+  //char udp_servo[] = "servo180_thread";
 
   light_loca = 0;
   scanf("%s",client1_ip);
   scanf("%s",client2_ip);
-  scanf("%s",client3_ip);
+  //scanf("%s",client3_ip);
 
   thread_id = pthread_create(&p_thread[0], NULL, udp_sender_btn, (void*)udp_btn);
   if(thread_id < 0){
@@ -247,17 +248,17 @@ int main(){
     return 0;
   }
 
-  thread_id = pthread_create(&p_thread[2], NULL, udp_servo180, (void*)udp_servo);
-  if(thread_id < 0){
-    perror("[MAIN] thread create error\n");
-    return 0;
-  }
+  //thread_id = pthread_create(&p_thread[2], NULL, udp_servo180, (void*)udp_servo);
+  //if(thread_id < 0){
+  //  perror("[MAIN] thread create error\n");
+  //  return 0;
+  //}
 
-  thread_id = pthread_create(&p_thread[3], NULL, servo_turning, (void*)servo_thread);
-  if(thread_id < 0){
-    perror("[MAIN] thread create error\n");
-    return 0;
-  }
+  //thread_id = pthread_create(&p_thread[3], NULL, servo_turning, (void*)servo_thread);
+  //if(thread_id < 0){
+  //  perror("[MAIN] thread create error\n");
+  //  return 0;
+  //}
 
   thread_id = pthread_create(&p_thread[4], NULL, button_checker, (void*)btn_st);
   if(thread_id < 0){
@@ -291,8 +292,8 @@ int main(){
   }
   pthread_join(p_thread[0], (void**)&status);
   pthread_join(p_thread[1], (void**)&status);
-  pthread_join(p_thread[2], (void**)&status);
-  pthread_join(p_thread[3], (void**)&status);
+  pthread_join(p_thread[4], (void**)&status);
+  //pthread_join(p_thread[3], (void**)&status);
 
   return 0;
 }
