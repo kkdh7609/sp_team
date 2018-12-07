@@ -171,6 +171,9 @@ int main(){
   char btn_st[] = "btn_status";
   char servo_thread[] = "servo_thread";
 
+  scanf("%s",client1_ip);
+  scanf("%s",client2_ip);
+
   thread_id = pthread_create(&p_thread[0], NULL, udp_sender_btn, (void*)udp_btn);
   if(thread_id < 0){
     perror("[MAIN] thread create error\n");
