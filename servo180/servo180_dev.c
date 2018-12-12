@@ -35,16 +35,19 @@ void turn_servo(int mode){
     for(i=0;i<50;i++){
       gpio_set_value(GPIO_180,1);
       mdelay(2);
+      udelay(500);
       gpio_set_value(GPIO_180,0);
-      mdelay(18);
+      mdelay(17);
+      udelay(500);
     }
   }
   else if(mode==1){
     for(i=0; i<50; i++){
       gpio_set_value(GPIO_180,1);
-      mdelay(1);
+      udelay(500);
       gpio_set_value(GPIO_180,0);
       mdelay(19);
+      udelay(500);
     }
   }
 }
