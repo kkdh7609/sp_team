@@ -42,10 +42,9 @@ void turn_servo(int mode){
   else if(mode==1){
     for(i=0; i<50; i++){
       gpio_set_value(GPIO_180,1);
-      udelay(500);
+      mdelay(1);
       gpio_set_value(GPIO_180,0);
       mdelay(19);
-      udelay(500);
     }
   }
 }
