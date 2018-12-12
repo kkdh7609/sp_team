@@ -156,7 +156,6 @@ void *button_checker(void *p){
   }
 }
 
-/*
 void* udp_servo180(void *p){
   pid_t pid;
   pthread_t tid;
@@ -231,7 +230,6 @@ void* servo_turning(void *p){
     sleep(1);
   }
 }
-*/
 
 int main(){
   int light_loc;
@@ -261,17 +259,17 @@ int main(){
     return 0;
   }
 
-  //thread_id = pthread_create(&p_thread[2], NULL, udp_servo180, (void*)udp_servo);
-  //if(thread_id < 0){
-  //  perror("[MAIN] thread create error\n");
-  //  return 0;
-  //}
+  thread_id = pthread_create(&p_thread[2], NULL, udp_servo180, (void*)udp_servo);
+  if(thread_id < 0){
+    perror("[MAIN] thread create error\n");
+    return 0;
+  }
 
-  //thread_id = pthread_create(&p_thread[3], NULL, servo_turning, (void*)servo_thread);
-  //if(thread_id < 0){
-  //  perror("[MAIN] thread create error\n");
-  //  return 0;
-  //}
+  thread_id = pthread_create(&p_thread[3], NULL, servo_turning, (void*)servo_thread);
+  if(thread_id < 0){
+    perror("[MAIN] thread create error\n");
+    return 0;
+  }
 
   thread_id = pthread_create(&p_thread[4], NULL, button_checker, (void*)btn_st);
   if(thread_id < 0){
