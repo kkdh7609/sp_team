@@ -303,8 +303,9 @@ int main(){
   }
   pthread_join(p_thread[0], (void**)&status);
   pthread_join(p_thread[1], (void**)&status);
+  pthread_join(p_thread[2], (void**)&status);
   pthread_join(p_thread[4], (void**)&status);
-  //pthread_join(p_thread[3], (void**)&status);
+  pthread_join(p_thread[3], (void**)&status);
 
   return 0;
 }
