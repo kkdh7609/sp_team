@@ -21,6 +21,7 @@ int gas_open(struct inode* pinode, struct file* pfile){
     printk("[GAS]GPIO ERROR\n");
     return -1;
   }
+  gpio_direction_output(GPIO_GAS, 0);
   if(gpio_direction_input(GPIO_GAS)<0){
     printk("[GAS]GPIO INPUT ERROR\n");
     return -1;
