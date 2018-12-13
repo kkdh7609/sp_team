@@ -16,13 +16,12 @@ int Soilmoisture_open(struct inode* pinode, struct file* pfile) {
   if( gpio_request(GPIO, "GPIO")) {
     printk(KERN_ALERT "GPIO Request Fail\n");
   }
-
+  gpio_direction_output(GPIO, 0);
+  gpio_direction_input(GPIO);
   return 0;
 }
 
 ssize_t Soilmoisture_read(struct file* pfile, char __user* buffer, size_t length, loff_t* offset) {
-  gpio_direction_output(GPIO, 0);
-  gpio_direction_input(GPIO);
   if(0 < gpio_get_value(GPIO)) {
    copy_to_user(buffer, "1", length);
   }
