@@ -9,6 +9,7 @@
 
 static int mode;
 
+// get illuminance sensors status from other raspberry pi.
 void *udp_receiver(void *p){
   pid_t pid;
   pthread_t tid;
