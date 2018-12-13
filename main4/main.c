@@ -35,7 +35,8 @@ int main(void){
     printf("[MAIN] bind error!\n");
     return 0;
   }
-
+  
+  // Rotate orders come from other raspberry pi. 
   while(1){
     recvfrom(sock, buff, 6, 0, (struct sockaddr*)&add_server, &add_server_size);
     num_buff = (int)(buff[0] - '0');
