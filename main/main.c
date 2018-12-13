@@ -21,6 +21,7 @@ static int light_loca;
 static int cur_signal;
 static t_time pre_time;
 
+// Send current status
 void *udp_sender_btn(void *p){
   pid_t pid;
   pthread_t tid;
@@ -42,6 +43,7 @@ void *udp_sender_btn(void *p){
   client_addr.sin_port = htons(PORT_1);
   client_addr.sin_addr.s_addr = inet_addr(client1_ip);
 
+  // send_msg is equivalent to is_on
   while(1){
     if(is_on == 1)
       send_msg[0] = '1';
@@ -57,6 +59,7 @@ void *udp_sender_btn(void *p){
   }
 }
 
+// Send illuminance sensor's input to outher raspberry pi(to rocate motor)
 void *udp_sender_light(void *p){
   pid_t pid;
   pthread_t tid;
@@ -80,6 +83,8 @@ void *udp_sender_light(void *p){
   client_addr.sin_addr.s_addr = inet_addr(client2_ip);
   time(&pre_time);
   while(1){
+    // Sending the same signal as the previous signal does not tell if there is a change to other raspberry pi.
+    // If motor should turn same direction as previous, change the signal and send.
     time(&now_time);
     if(is_on == 3){
       if(now_time - pre_time > 60){
@@ -114,6 +119,7 @@ void *udp_sender_light(void *p){
   }
 }
 
+// Check buttons are pushed.
 void *button_checker(void *p){
   pid_t pid;
   pthread_t tid;
@@ -127,6 +133,7 @@ void *button_checker(void *p){
   temp_btn = status_button();
   sleep(1);
   while(1){
+    // There are four mode. 0 = when both are off, 1 = when one button is on, 2 = when other button is on, 3 = when both are on.
     but_num = status_button();
     printf("%d\n",but_num);
     if(but_num < 0){
@@ -156,6 +163,7 @@ void *button_checker(void *p){
   }
 }
 
+// Turning 180 degrees servo motor in other raspberry pi.
 void* udp_servo180(void *p){
   pid_t pid;
   pthread_t tid;
@@ -184,6 +192,7 @@ void* udp_servo180(void *p){
   }
 }
 
+// Rotate 180 degrees servo motor periodically
 void* servo_turning(void *p){
   pid_t pid;
   pthread_t tid;
