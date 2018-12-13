@@ -16,9 +16,8 @@ int Soilmoisture_open(struct inode* pinode, struct file* pfile) {
   if( gpio_request(GPIO, "GPIO")) {
     printk(KERN_ALERT "GPIO Request Fail\n");
   }
-
+  gpio_direction_output(GPIO, 0);
   gpio_direction_input(GPIO);
-
   return 0;
 }
 
