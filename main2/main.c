@@ -15,6 +15,7 @@ static int soil_stat = 0;
 static int cur_tem = 0;
 static int is_on;
 
+// get gas status
 void *get_gas(void *p){
   pid_t pid;
   pthread_t tid;
@@ -38,6 +39,7 @@ void *get_gas(void *p){
   }
 }
 
+// get soilmoisture sensor status
 void *get_soil(void *p){
   pid_t pid;
   pthread_t tid;
@@ -62,6 +64,7 @@ void *get_soil(void *p){
   }
 }
 
+// get dht sensors input
 void *getting_dht(void *p){
   pid_t pid;
   pthread_t tid;
@@ -87,6 +90,7 @@ void *getting_dht(void *p){
   }
 }
 
+// set the led
 void *setting_led(void *p){
   pid_t pid;
   pthread_t tid;
@@ -115,6 +119,7 @@ void *setting_led(void *p){
   }
 }
 
+// check button status from other raspberry pi.
 void *udp_receiver(void *p){
   pid_t pid;
   pthread_t tid;
@@ -155,6 +160,7 @@ void *udp_receiver(void *p){
     sleep(1);
   }
 }
+
 int main(void){
   pthread_t p_thread[4];
   int thread_id;
